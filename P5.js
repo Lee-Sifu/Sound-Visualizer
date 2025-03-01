@@ -13,11 +13,12 @@ var b; //global var for mouse trail
 
 // Preload function allows me to add sound file of choice
 function preload() {
-  sound = loadSound("My Name.m4a"); //Disclaimer! All rights belong to the original creators (From Ashes to New)
+  sound = loadSound("Synth Town.m4a"); // Made in Logic Pro X. Exported as m4a to compress size
 }
 
 function setup() {
   let cnv = createCanvas(500, 500); //Creates canvas
+  
 
   amplitude = new p5.Amplitude();
   angleMode(DEGREES);
@@ -30,8 +31,15 @@ function setup() {
   fft = new p5.FFT();
 }
 
-// Creates mouse trail effect
+
 function draw() {
+  // Text Instructions
+  fill(255);
+  textSize(25);
+  textAlign(CENTER, TOP);
+  text("Click Me", width / 2,height / 6);
+  
+  // Creates mouse trail effect
   r = map(mouseX, 0, 400, 0, 255);
   b = map(mouseY, 0, 400, 0, 255);
 
@@ -49,7 +57,7 @@ function draw() {
     ellipse(trail[i].x, trail[i].y, trail[i].diameter);
 
     // Update alpha value for fading
-    trail[i].alpha -= 100; // Adjust the fading speed (Right now trail doesn't really fade)
+    trail[i].alpha -= 100; // Adjust the fading speed (Right now trail doesn't really fade away from screen)
   }
    // Remove faded points from the beginning of the trail
   while (trail.length > 0 && trail[0].alpha <= 0) {
@@ -87,15 +95,17 @@ function shapeMaker() {
   let level = amplitude.getLevel();
   let size = map(level, 0, 1, 50, 500);
 
-  circle(55,55,size / 2); // Shape
+    circle(55, 55, size / 2); // Top left
+    circle(100, 100, size / 2); 
   
-  circle(100,100,size / 2); // Shape
-  
-   circle(400,400,size / 2); // Shape
-  
-  circle(450, 450,size / 2); // Shape
-  //circle(100,450, size / 2);  
- //circle(24,24, size / 2); // I wasn't able to get some shapes on the other two corners
+    circle(400, 400, size / 2); // Bottom Right
+    circle(450, 450, size / 2); 
+    
+    circle(55, 450, size / 2); //Bottom Left
+    circle(100, 400, size / 2);
+    
+    circle(450, 55, size / 2); //Top Right
+    circle(400, 100, size / 2);
   
   translate(width / 2, height / 2);
   rotate(size);
